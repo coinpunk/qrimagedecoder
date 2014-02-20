@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<link rel="stylesheet" type="text/css" href="css/coinpunk.css">
+
+<!-- javascripts from coinpunk -->
+
+    <!-- assorted libraries -->
+    <script src="js/jquery.js"></script>
+    <script src="js/coinpunk.js"></script> <!-- modified as per comments -->
+    <script src="js/controller.js"></script>
+    <script src="js/URI.js"></script>
+
+    <!-- all the qrcode library -->
+    <!-- see https://github.com/LazarSoft/jsqrcode -->
+    <script type="text/javascript" src="js/jsqrcode/grid.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/version.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/detector.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/formatinf.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/errorlevel.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/bitmat.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/datablock.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/bmparser.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/datamask.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/rsdecoder.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/gf256poly.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/gf256.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/decoder.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/qrcode.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/findpat.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/alignpat.js"></script>
+    <script type="text/javascript" src="js/jsqrcode/databr.js"></script>
+
+    <!-- the important stuff which has been modified -->
+    <script src="js/qrimagedecoder.js"></script>
+    <script src="js/tx.js"></script>
+
+<!-- end javascripts from coinpunk -->
+
+</head>
+
+<body>
+
+
+
+
+
+<!-- public/views/tx/send.html copy / paste with template values hardcoded -->
+
+<style>
+ .exchangePrice {
+   padding-left: 5px;
+  }
+</style>
+<div class="row">
+  <div class="col-lg-12 text-center">
+    <h1>Send Bitcoins</h2>
+      <hr>
+  </div>
+</div>
+
+<div class="row" style="padding-bottom: 20px">
+  <div class="col-lg-12 text-center">
+    <h4>You have <span id="availableBalance" class="addExchangePrice" style="color: #009933;">21,827.3823 BTC</span> available to spend.</h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-offset-3 col-lg-6">
+    <div id="errors" class="alert alert-danger hidden"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-10 col-lg-offset-1">
+    <form id="createSendForm" action="#" onsubmit="coinpunk.controllers.tx.create(); return false;" class="form-horizontal" role="form">
+      
+      <div class="form-group hidden-lg">
+        <label for="qrcodeinput" class="col-lg-5 control-label">Scan from QR Code
+        <div class="col-lg-5">
+          <input class="btn btn-large btn-info" type="file" id="qrcodeinput" name="qrcodeinput" accept="image/*" capture="camera" style="width: 110px">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="address" class="col-lg-5 control-label">Bitcoin address to send to</label>
+        <div class="col-lg-5">
+          <input id="address" type="text" name="address" autocomplete="off" class="form-control" onchange="coinpunk.controllers.tx.calculateFee()">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="amount" class="col-lg-5 control-label">Amount</label>
+        <div class="col-lg-5">
+          <input id="amount" type="text" name="amount" class="form-control" autocomplete="off" placeholder="0.00" style="display: inline; width: 100px" oninput="coinpunk.controllers.tx.sendExchangeUpdate()" onchange="coinpunk.controllers.tx.calculateFee()"> BTC <span style="padding-left: 30px"> ≈ 
+          <input id="amountExchange" type="text" name="amountExchange" class="form-control" autocomplete="off" placeholder="0.00" style="display: inline; width: 100px" oninput="coinpunk.controllers.tx.sendBTCUpdate()"> 100
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="" class="col-lg-5 control-label"></label>
+        <div class="col-lg-5">
+          <input id="sendAmount" type="hidden" value="">
+          <input id="changeAddress" type="hidden" value="">
+          <input id="calculatedFee" type="hidden" value="1">
+          <p>A fee of <span id="fee" class="addExchangePrice" style="color: #009933;">1 BTC</span> will be added to ensure timely processing by the Bitcoin network.</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="submit" class="col-lg-5 control-label hidden-sm hidden-xs"></label>
+        <div class="col-lg-2 text-center">
+          <button id="sendButton" type="submit" class="btn btn-default btn-lg btn-primary" class="form-control"><i class="fa fa-bitcoin"></i> Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+	$("#qrcodeinput").on("change", coinpunk.controllers.tx.scanQR);
+</script>
+
+<!-- end copy and paste of public/views/tx/send.html -->
+
+
+
+
+
+
+</body>
+
+</html>

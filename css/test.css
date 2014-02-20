@@ -1,0 +1,38 @@
+body {
+    font-family: courier;
+    font-size: 12px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 3px;
+    border: 1px solid #BBB;
+}
+
+th {
+    text-align: center;
+}
+
+.thumbnail {
+    width: 50px;
+}
+
+.large-image-container {
+    position: fixed;
+    width: 70%;
+    height: 80%;
+    left: 13%;
+    top: 8%;
+    padding: 1%;
+    border: 1px solid black;
+    display: none;
+    background-color: #FFF;
+    overflow: auto;
+}
+
+.large-image-container img {
+    border: 1px solid #BBB;
+}
